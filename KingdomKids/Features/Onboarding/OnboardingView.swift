@@ -1,5 +1,5 @@
 //
-//  Untitled.swift
+//  OnboardingView.swift
 //  KingdomKids
 //
 //  Created by Paul Rodriguez on 5/25/26.
@@ -26,12 +26,14 @@ struct OnboardingView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.kkGold)
                 
-                Text("A safe palce to learn & grow in faith")
+                Text("A safe place to learn & grow in faith")
                     .font(.subheadline)
                     .foregroundStyle(Color.kkTextLight)
                     .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
                 
                 Spacer()
+                    .frame(height: 16)
                 
                 Text("How old is your little one?")
                     .font(.headline)
@@ -41,20 +43,20 @@ struct OnboardingView: View {
                     AgeButton(
                         emoji: "🐣",
                         title: "Toddler",
-                        subtitle: "Ages 2 - 4",
+                        subtitle: "Ages 2 – 4",
                         ageGroup: .toddler
                     )
-                    
                     AgeButton(
                         emoji: "🌟",
                         title: "Explorer",
-                        subtitle: "Ages 5 - 8",
+                        subtitle: "Ages 5 – 8",
                         ageGroup: .explorer
                     )
                 }
                 .padding(.horizontal, 24)
                 
                 Spacer()
+                    .frame(height: 160)
             }
         }
     }
@@ -90,12 +92,17 @@ struct AgeButton: View {
                 Spacer()
             }
             .padding(16)
-            .background(Color(red: 0.325, green: 0.290, blue: 0.718))
+            .background(Color.kkPurpleMid)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color(red: 0.498, green: 0.467, blue: 0.867), lineWidth: 1.5)
+                    .stroke(Color.kkPurpleLight, lineWidth: 1.5)
             )
         }
     }
+}
+
+#Preview {
+    OnboardingView()
+        .environment(AppState())
 }
