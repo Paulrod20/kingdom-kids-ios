@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		94D81D9C2FC52F620074690E /* Exceptions for "KingdomKids" folder in "KingdomKids" target */ = {
+		946364F92FC621B00093AE40 /* Exceptions for "KingdomKids" folder in "KingdomKids" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
@@ -40,10 +40,10 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		94D81D7B2FC52F610074690E /* KingdomKids */ = {
+		946364F32FC621AF0093AE40 /* KingdomKids */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				94D81D9C2FC52F620074690E /* Exceptions for "KingdomKids" folder in "KingdomKids" target */,
+				946364F92FC621B00093AE40 /* Exceptions for "KingdomKids" folder in "KingdomKids" target */,
 			);
 			path = KingdomKids;
 			sourceTree = "<group>";
@@ -88,7 +88,7 @@
 		94D81D702FC52F610074690E = {
 			isa = PBXGroup;
 			children = (
-				94D81D7B2FC52F610074690E /* KingdomKids */,
+				946364F32FC621AF0093AE40 /* KingdomKids */,
 				94D81D8D2FC52F620074690E /* KingdomKidsTests */,
 				94D81D972FC52F620074690E /* KingdomKidsUITests */,
 				94D81D7A2FC52F610074690E /* Products */,
@@ -121,7 +121,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				94D81D7B2FC52F610074690E /* KingdomKids */,
+				946364F32FC621AF0093AE40 /* KingdomKids */,
 			);
 			name = KingdomKids;
 			packageProductDependencies = (
@@ -293,7 +293,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KingdomKids/Info.plist;
+				INFOPLIST_FILE = KingdomKids/Resources/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -336,7 +336,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KingdomKids/Info.plist;
+				INFOPLIST_FILE = KingdomKids/Resources/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
