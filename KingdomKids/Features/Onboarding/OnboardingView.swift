@@ -15,48 +15,53 @@ struct OnboardingView: View {
             Color.kkPurpleDark
                 .ignoresSafeArea()
             
-            VStack(spacing: 24) {
-                Spacer()
-                
-                Text("👑")
-                    .font(.system(size: 72))
-                
-                Text("Kingdom Kids")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.kkGold)
-                
-                Text("A safe place to learn & grow in faith")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.kkTextLight)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
-                
-                Spacer()
-                    .frame(height: 16)
-                
-                Text("How old is your little one?")
-                    .font(.headline)
-                    .foregroundStyle(Color.kkTextWhite)
-                
-                VStack(spacing: 12) {
-                    AgeButton(
-                        emoji: "🐣",
-                        title: "Toddler",
-                        subtitle: "Ages 2 – 4",
-                        ageGroup: .toddler
-                    )
-                    AgeButton(
-                        emoji: "🌟",
-                        title: "Explorer",
-                        subtitle: "Ages 5 – 8",
-                        ageGroup: .explorer
-                    )
+            VStack(spacing: 0) {
+                // Top section
+                VStack(spacing: 0) {
+                    Text("👑")
+                        .font(.system(size: 72))
+                    
+                    Text("Kingdom Kids")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.kkGold)
+                        .padding(.top, 12)
+                    
+                    Text("A safe place to learn & grow in faith")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.kkTextLight)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 8)
+                        .padding(.horizontal, 40)
                 }
-                .padding(.horizontal, 24)
+                .padding(.top, 80)
                 
                 Spacer()
-                    .frame(height: 160)
+                
+                // Bottom section
+                VStack(spacing: 0) {
+                    Text("How old is your little one?")
+                        .font(.headline)
+                        .foregroundStyle(Color.kkTextWhite)
+                    
+                    VStack(spacing: 12) {
+                        AgeButton(
+                            emoji: "🐣",
+                            title: "Toddler",
+                            subtitle: "Ages 2 – 4",
+                            ageGroup: .toddler
+                        )
+                        AgeButton(
+                            emoji: "🌟",
+                            title: "Explorer",
+                            subtitle: "Ages 5 – 8",
+                            ageGroup: .explorer
+                        )
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.top, 16)
+                }
+                .padding(.bottom, 250)
             }
         }
     }
