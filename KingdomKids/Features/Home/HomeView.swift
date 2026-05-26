@@ -9,16 +9,26 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        ZStack {
-            Color.kkPurpleDark
-                .ignoresSafeArea()
-            
-            Text("Welcome to Kingdom Kids! 👑")
-                .foregroundStyle(Color.kkGold)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.center)
-                .padding()
+        TabView {
+            Tab("Games", systemImage: "gamecontroller") {
+                GamesTabView()
+            }
+            Tab("Stories", systemImage: "book") {
+                StoriesTabView()
+            }
+            Tab("Videos", systemImage: "play.circle") {
+                VideosTabView()
+            }
+            Tab("More", systemImage: "ellipsis.circle") {
+                MoreTabView()
+            }
         }
+        .tint(Color.kkGold)
     }
+}
+
+
+#Preview {
+    HomeView()
+        .environment(AppState())
 }
