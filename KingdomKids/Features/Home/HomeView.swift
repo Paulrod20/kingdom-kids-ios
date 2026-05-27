@@ -10,6 +10,9 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         TabView {
+            Tab("Home", systemImage: "house") {
+                HomeTabView()
+            }
             Tab("Games", systemImage: "gamecontroller") {
                 GamesTabView()
             }

@@ -10,10 +10,6 @@ import SwiftUI
 struct GamesTabView: View {
     @Environment(AppState.self) private var appState
     
-    private var todaysVerse: Verse {
-        verseOfTheDayList.randomElement() ?? verseOfTheDayList[0]
-    }
-    
     private var filteredGames: [Game] {
         gamesData.filter { $0.ageGroups.contains(appState.ageGroup ?? .toddler) }
     }
@@ -23,7 +19,6 @@ struct GamesTabView: View {
             VStack(spacing: 0) {
                 headerView
                 ageBadgeRow
-                verseCard
                 gamesSection
             }
         }
@@ -67,32 +62,6 @@ struct GamesTabView: View {
             .background(isActive ? Color.kkOrange : Color.kkPurpleMid)
             .foregroundStyle(isActive ? Color.kkOrangeDark : Color.kkTextLight)
             .clipShape(Capsule())
-    }
-    
-    // MARK: - Verse Card
-    private var verseCard: some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image(systemName: "book.fill")
-                .foregroundStyle(Color.kkOrangeDark)
-                .font(.title3)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("\"\(todaysVerse.text)\"")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.kkOrangeDark)
-                
-                Text("\(todaysVerse.reference) · Verse of the day")
-                    .font(.caption)
-                    .foregroundStyle(Color.kkOrangeDark.opacity(0.7))
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(14)
-        .background(Color.kkOrange)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .padding(.horizontal, 16)
-        .padding(.top, 14)
     }
     
     // MARK: - Games Section
@@ -171,7 +140,7 @@ struct GameCard: View {
         }
         .buttonStyle(.plain)
     }
-}
+} 
 
 #Preview {
     GamesTabView()
