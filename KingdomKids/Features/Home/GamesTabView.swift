@@ -55,7 +55,6 @@ struct GamesTabView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 8)
-//        .background(Color.kkPurpleDeep)
     }
     
     private func ageBadge(label: String, group: AgeGroup) -> some View {
@@ -124,45 +123,53 @@ struct GameCard: View {
     let game: Game
     
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            VStack(spacing: 6) {
-                Text(game.emoji)
-                    .font(.system(size: 36))
-                
-                Text(game.title)
-                    .font(.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.kkPurpleDeep)
-                
-                Text(game.subtitle)
-                    .font(.caption)
-                    .foregroundStyle(Color.kkPurpleMid)
+        Button {
+            if !game.isLocked {
+                // navigate to game — we'll wire this up later
+                print("Tapped \(game.title)")
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 14)
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-            .opacity(game.isLocked ? 0.55 : 1.0)
-            
-            if game.isLocked {
-                Text("🔒")
-                    .font(.caption2)
-                    .padding(5)
-                    .background(Color.kkOrange)
-                    .clipShape(Circle())
-                    .padding(6)
-            } else {
-                Text("FREE")
-                    .font(.system(size: 8))
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color.kkMintDark)
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 2)
-                    .background(Color.kkMint)
-                    .clipShape(Capsule())
-                    .padding(6)
+        } label: {
+            ZStack(alignment: .topTrailing) {
+                VStack(spacing: 6) {
+                    Text(game.emoji)
+                        .font(.system(size: 36))
+                    
+                    Text(game.title)
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.kkPurpleDeep)
+                    
+                    Text(game.subtitle)
+                        .font(.caption2)
+                        .foregroundStyle(Color.kkPurpleMid)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+                .background(Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .opacity(game.isLocked ? 0.55 : 1.0)
+                
+                if game.isLocked {
+                    Text("🔒")
+                        .font(.caption2)
+                        .padding(5)
+                        .background(Color.kkOrange)
+                        .clipShape(Circle())
+                        .padding(6)
+                } else {
+                    Text("FREE")
+                        .font(.system(size: 8))
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.kkMintDark)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
+                        .background(Color.kkMint)
+                        .clipShape(Capsule())
+                        .padding(6)
+                }
             }
         }
+        .buttonStyle(.plain)
     }
 }
 
