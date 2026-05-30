@@ -178,6 +178,8 @@ struct FeaturedStoryCard: View {
     }
 }
 
+// MARK: - Featured Video Card
+
 #Preview {
     HomeTabView()
         .environment(AppState())
