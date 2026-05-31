@@ -40,7 +40,7 @@ let storiesData: [Story] = [
     ),
     Story(
         title: "Joseph's Coat of Many Colors",
-        subtitle: "A colorful coat and a big dream",
+        subtitle: "A coat and a big dream",
         emoji: "🌈",
         ageGroups: [.toddler, .explorer],
         isLocked: true

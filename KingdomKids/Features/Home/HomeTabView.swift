@@ -168,7 +168,7 @@ struct FeaturedStoryCard: View {
                     .foregroundStyle(Color.kkPurpleMid)
                     .multilineTextAlignment(.center)
             }
-            .frame(width: 140)
+            .frame(width: 140, height: 100)
             .padding(.vertical, 14)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 14))
