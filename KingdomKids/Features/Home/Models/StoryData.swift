@@ -18,6 +18,20 @@ struct Story {
 
 let storiesData: [Story] = [
     Story(
+        title: "The Beginning of the World",
+        subtitle: "A story of creation",
+        emoji: "🌍",
+        ageGroups: [.toddler, .explorer],
+        isLocked: false
+    ),
+    Story(
+        title: "Adam & Eve",
+        subtitle: "The beginning of everything",
+        emoji: "🌳",
+        ageGroups: [.toddler, .explorer],
+        isLocked: false
+    ),
+    Story(
         title: "Noah's Ark",
         subtitle: "God saves Noah and the animals",
         emoji: "🚢",
@@ -25,18 +39,11 @@ let storiesData: [Story] = [
         isLocked: false
     ),
     Story(
-        title: "David & Goliath",
-        subtitle: "A small boy defeats a giant",
-        emoji: "🪨",
-        ageGroups: [.explorer],
-        isLocked: false
-    ),
-    Story(
-        title: "Jonah & the Whale",
-        subtitle: "God gives Jonah a second chance",
-        emoji: "🐋",
+        title: "Joseph's Coat of Many Colors",
+        subtitle: "A colorful coat and a big dream",
+        emoji: "🌈",
         ageGroups: [.toddler, .explorer],
-        isLocked: false
+        isLocked: true
     ),
     Story(
         title: "Baby Moses",
@@ -46,9 +53,30 @@ let storiesData: [Story] = [
         isLocked: true
     ),
     Story(
+        title: "David & Goliath",
+        subtitle: "A small boy defeats a giant",
+        emoji: "🪨",
+        ageGroups: [.explorer],
+        isLocked: true
+    ),
+    Story(
         title: "Daniel & the Lions",
         subtitle: "God protects Daniel",
         emoji: "🦁",
+        ageGroups: [.toddler, .explorer],
+        isLocked: true
+    ),
+    Story(
+        title: "Jonah & the Whale",
+        subtitle: "God gives Jonah a second chance",
+        emoji: "🐋",
+        ageGroups: [.toddler, .explorer],
+        isLocked: true
+    ),
+    Story(
+        title: "The Birth of Jesus",
+        subtitle: "A new beginning",
+        emoji: "👶",
         ageGroups: [.toddler, .explorer],
         isLocked: true
     ),
@@ -66,11 +94,4 @@ let storiesData: [Story] = [
         ageGroups: [.toddler, .explorer],
         isLocked: true
     ),
-    Story(
-        title: "Adam & Eve",
-        subtitle: "The beginning of everything",
-        emoji: "🌳",
-        ageGroups: [.toddler, .explorer],
-        isLocked: true
-    )
 ]
