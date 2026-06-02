@@ -15,4 +15,3 @@ struct VideoChannel {
     let channelURL: String
     let ageGroups: [AgeGroup]
 }
-

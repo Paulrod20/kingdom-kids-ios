@@ -7,19 +7,220 @@
 
 import SwiftUI
 
-struct VideosTabView: View {
-    var body: some View {
-        ZStack {
-            Color.kkPurpleDark
-                .ignoresSafeArea()
+//
+//  VideosTabView.swift
+//  KingdomKids
+//
+//  Created by Paul Rodriguez on 5/25/26.
+//
 
-            Text("Videos coming soon!")
-                .foregroundStyle(Color.kkGold)
-                .font(.headline)
+import SwiftUI
+
+struct VideosTabView: View {
+    @Environment(AppState.self) private var appState
+    @State private var channelVideos: [String: [YouTubeVideo]] = [:]
+    @State private var isLoading = true
+    
+    private var filteredChannels: [Channel] {
+        channelData.filter { $0.ageGroup.contains(appState.ageGroup ?? .toddler) }
+    }
+    
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                headerView
+                
+                if isLoading {
+                    loadingView
+                } else {
+                    channelsRow
+                    videosByChannelSection
+                }
+            }
         }
+        .background(Color.kkPurpleDark.ignoresSafeArea())
+        .scrollContentBackground(.hidden)
+        .task {
+            await loadAllVideos()
+        }
+    }
+    
+    // MARK: - Header
+    private var headerView: some View {
+        VStack(spacing: 4) {
+            Text("📺")
+                .font(.system(size: 36))
+            Text("Videos")
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.kkGold)
+            Text("Curated Christian content for your little one")
+                .font(.caption)
+                .foregroundStyle(Color.kkTextLight)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 16)
+        .background(Color.kkPurpleDark)
+    }
+    
+    // MARK: - Loading
+    private var loadingView: some View {
+        VStack(spacing: 16) {
+            ProgressView()
+                .tint(Color.kkGold)
+                .scaleEffect(1.5)
+            Text("Loading videos...")
+                .font(.caption)
+                .foregroundStyle(Color.kkTextLight)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 60)
+    }
+    
+    // MARK: - Channels Row
+    private var channelsRow: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("CHANNELS")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.kkPurpleLight)
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(filteredChannels, id: \.id) { channel in
+                        NavigationLink(destination: ChannelDetailView(channel: channel)) {
+                            ChannelCard(channel: channel)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
+            }
+        }
+    }
+    
+    // MARK: - Videos by Channel
+    private var videosByChannelSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(filteredChannels, id: \.id) { channel in
+                if let videos = channelVideos[channel.channelId], !videos.isEmpty {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Text(channel.channelName)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Color.kkPurpleLight)
+                            Spacer()
+                            NavigationLink(destination: ChannelDetailView(channel: channel)) {
+                                Text("See All")
+                                    .font(.caption)
+                                    .foregroundStyle(Color.kkGold)
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 10) {
+                                ForEach(videos.prefix(5)) { video in
+                                    VideoCard(video: video)
+                                }
+                            }
+                            .padding(.horizontal, 16)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.bottom, 16)
+    }
+    
+    // MARK: - Load Videos
+    private func loadAllVideos() async {
+        await withTaskGroup(of: (String, [YouTubeVideo]).self) { group in
+            for channel in filteredChannels {
+                group.addTask {
+                    let videos = try? await YouTubeService.shared.fetchVideos(channelID: channel.channelId)
+                    return (channel.channelId, videos ?? [])
+                }
+            }
+            for await (channelId, videos) in group {
+                channelVideos[channelId] = videos
+            }
+        }
+        isLoading = false
+    }
+}
+
+// MARK: - Channel Card
+struct ChannelCard: View {
+    let channel: Channel
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Image(channel.bannerImageChannel)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 160, height: 90)
+                .clipped()
+            
+            Text(channel.channelName)
+                .font(.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.kkPurpleDeep)
+                .multilineTextAlignment(.center)
+                .padding(8)
+                .frame(width: 160, height: 45)
+        }
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+}
+
+// MARK: - Video Card
+struct VideoCard: View {
+    let video: YouTubeVideo
+    
+    var body: some View {
+        Button {
+            if let url = URL(string: video.videoURL) {
+                UIApplication.shared.open(url)
+            }
+        } label: {
+            VStack(alignment: .leading, spacing: 6) {
+                AsyncImage(url: URL(string: video.thumbnail)) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    Color.kkPurpleMid
+                }
+                .frame(width: 160, height: 90)
+                .clipped()
+                
+                Text(video.title)
+                    .font(.caption2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.kkPurpleDeep)
+                    .lineLimit(2)
+                    .padding(.horizontal, 8)
+                
+                Text(video.channelName)
+                    .font(.caption2)
+                    .foregroundStyle(Color.kkPurpleMid)
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 8)
+            }
+            .frame(width: 160)
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+        .buttonStyle(.plain)
     }
 }
 
 #Preview {
     VideosTabView()
+        .environment(AppState())
 }
