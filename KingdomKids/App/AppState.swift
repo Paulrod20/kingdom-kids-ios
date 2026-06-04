@@ -17,4 +17,5 @@ class AppState {
     var ageGroup: AgeGroup? = nil
     var hasCompletedOnboarding: Bool = false
     var selectedAvatar: String = "⭐️"
+    var isAuthenticated: Bool = false
 }
