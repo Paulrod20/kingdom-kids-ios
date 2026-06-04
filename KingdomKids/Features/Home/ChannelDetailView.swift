@@ -22,7 +22,9 @@ struct ChannelDetailView: View {
                 .padding()
         }
         .navigationTitle(channel.channelName)
+#if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+#endif
     }
 }
 

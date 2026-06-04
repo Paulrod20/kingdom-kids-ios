@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-//
-//  VideosTabView.swift
-//  KingdomKids
-//
-//  Created by Paul Rodriguez on 5/25/26.
-//
-
-import SwiftUI
-
 struct VideosTabView: View {
     @Environment(AppState.self) private var appState
     @State private var channelVideos: [String: [YouTubeVideo]] = [:]
@@ -141,8 +132,12 @@ struct VideosTabView: View {
         await withTaskGroup(of: (String, [YouTubeVideo]).self) { group in
             for channel in filteredChannels {
                 group.addTask {
-                    let videos = try? await YouTubeService.shared.fetchVideos(channelID: channel.channelId)
-                    return (channel.channelId, videos ?? [])
+                    do {
+                        let videos = try await YouTubeService.shared.fetchVideos(channelID: channel.channelId)
+                        return (channel.channelId, videos)
+                    } catch {
+                        return (channel.channelId, [])
+                    }
                 }
             }
             for await (channelId, videos) in group {
@@ -152,7 +147,6 @@ struct VideosTabView: View {
         isLoading = false
     }
 }
-
 // MARK: - Channel Card
 struct ChannelCard: View {
     let channel: Channel
@@ -180,12 +174,13 @@ struct ChannelCard: View {
 
 // MARK: - Video Card
 struct VideoCard: View {
+    @Environment(\.openURL) private var openURL
     let video: YouTubeVideo
     
     var body: some View {
         Button {
             if let url = URL(string: video.videoURL) {
-                UIApplication.shared.open(url)
+                openURL(url)
             }
         } label: {
             VStack(alignment: .leading, spacing: 6) {
