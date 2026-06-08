@@ -75,9 +75,9 @@ struct AuthView: View {
             signInWithApple()
         } label: {
             HStack(spacing: 8) {
-                Image(systemName: "applelogo.circle")
+                Image(systemName: "apple.logo")
                     .font(.title3)
-                Text("Sign in with Apple")
+                Text(isSignIn ? "Sign in with Apple" : "Sign up with Apple")
                     .font(.headline)
             }
             .foregroundStyle(Color.kkPurpleDark)
@@ -198,24 +198,31 @@ struct AuthView: View {
     // MARK: - Auth Functions (placerholder)
     private func signIn() {
         isLoading = true
-        //Firebase - wire up later
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            isLoading = false
-            appState.isAuthenticated = true
+        Task {
+            do {
+                try await AuthService.shared.signIn(email: email, password: password)
+            } catch {
+                print("❌ Sign in error: \(error.localizedDescription)")
+                isLoading = false
+            }
         }
     }
     
     private func signUp() {
         isLoading = true
-        // Firebase - wire up later
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            isLoading = false
-            appState.isAuthenticated = true
+        Task {
+            do {
+                try await AuthService.shared.signUp(email: email, password: password)
+            } catch {
+                print("❌ Sign up error: \(error.localizedDescription)")
+                isLoading = false
+            }
         }
     }
     
     private func signInWithApple() {
         // Sign in with Apple - wire up later
+        appState.isAuthenticated = true
     }
 }
 
