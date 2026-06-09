@@ -49,7 +49,7 @@ struct AboutView: View {
     
     // MARK: - Mission
     private var missionSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        InfoCard {
             Text("Our Mission")
                 .font(.headline)
                 .foregroundStyle(Color.kkGold)
@@ -59,15 +59,11 @@ struct AboutView: View {
                 .foregroundStyle(Color.kkTextLight)
                 .lineSpacing(6)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(20)
-        .background(Color.kkPurpleMid.opacity(0.3))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
     
     // MARK: - Features
     private var featuresSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        InfoCard {
             Text("What's Inside")
                 .font(.headline)
                 .foregroundStyle(Color.kkGold)
@@ -79,10 +75,6 @@ struct AboutView: View {
                 featureRow(emoji: "🐣", title: "Age Appropriate", description: "Content tailored for Toddlers (2–4) and Explorers (5–8)")
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(20)
-        .background(Color.kkPurpleMid.opacity(0.3))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
     
     private func featureRow(emoji: String, title: String, description: String) -> some View {
