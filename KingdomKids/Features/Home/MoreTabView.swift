@@ -11,7 +11,7 @@ struct MoreTabView: View {
     @Environment(AppState.self) private var appState
     @State private var showAvatarPicker = false
     
-    let avatars = ["⭐️", "🦁", "🐣", "🌟", " 🦋", "🐬", "🦊", "🐸"]
+    let avatars = ["⭐️", "🦁", "🐣", "🌟", "🦋", "🐬", "🦊", "🐸"]
     
     var body: some View {
         List {
@@ -23,6 +23,8 @@ struct MoreTabView: View {
         .scrollContentBackground(.hidden)
         .background(Color.kkPurpleDark.ignoresSafeArea())
         .navigationTitle("More")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarColorScheme(.dark, for: .navigationBar)
         .sheet(isPresented: $showAvatarPicker) {
             AvatarPickerView(avatars: avatars)
                 .environment(appState)
@@ -65,7 +67,7 @@ struct MoreTabView: View {
                 Spacer()
                 Picker("", selection: Binding(
                     get: { appState.ageGroup ?? .toddler },
-                    set: { appState.ageGroup = $0}
+                    set: { appState.ageGroup = $0 }
                 )) {
                     Text("🐣 Toddler").tag(AgeGroup.toddler)
                     Text("🌟 Explorer").tag(AgeGroup.explorer)
@@ -98,7 +100,6 @@ struct MoreTabView: View {
             }
             
             Button {
-                // paywall - wire up later
             } label: {
                 HStack {
                     Label("Upgrade to Premium", systemImage: "star.fill")
@@ -111,7 +112,6 @@ struct MoreTabView: View {
             }
             
             Button {
-                // restore purchases - wire up later
             } label: {
                 Label("Restore Purchases", systemImage: "arrow.clockwise")
                     .foregroundStyle(Color.kkTextLight)
@@ -126,47 +126,28 @@ struct MoreTabView: View {
     // MARK: - App Section
     private var appSection: some View {
         Section {
-            Button {
-                
+            NavigationLink {
+                AboutView()
             } label: {
-                HStack {
-                    Label("About Kingdom Kids", systemImage: "info.circle")
-                        .foregroundStyle(Color.kkTextWhite)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.kkPurpleLight)
-                        .font(.caption)
-                }
+                Label("About Kingdom Kids", systemImage: "info.circle")
+                    .foregroundStyle(Color.kkTextWhite)
+            }
+            
+            NavigationLink {
+//                PrivacyPolicyView()
+            } label: {
+                Label("Privacy Policy", systemImage: "lock.shield")
+                    .foregroundStyle(Color.kkTextWhite)
+            }
+            
+            NavigationLink {
+//                TermsOfUseView()
+            } label: {
+                Label("Terms of Use", systemImage: "doc.text")
+                    .foregroundStyle(Color.kkTextWhite)
             }
             
             Button {
-                
-            } label: {
-                HStack {
-                    Label("Privacy Policy", systemImage: "lock.shield")
-                        .foregroundStyle(Color.kkTextWhite)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.kkPurpleLight)
-                        .font(.caption)
-                }
-            }
-            
-            Button {
-                
-            } label: {
-                HStack {
-                    Label("Terms of Use", systemImage: "doc.text")
-                        .foregroundStyle(Color.kkTextWhite)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.kkPurpleLight)
-                        .font(.caption)
-                }
-            }
-            
-            Button {
-                 
             } label: {
                 HStack {
                     Label("Rate on the App Store", systemImage: "star.fill")
@@ -187,41 +168,25 @@ struct MoreTabView: View {
     // MARK: - Support Section
     private var supportSection: some View {
         Section {
-            Button {
-                
+            NavigationLink {
+//                ContactView()
             } label: {
-                HStack {
-                    Label("Contact Us", systemImage: "envelope")
-                        .foregroundStyle(Color.kkTextWhite)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.kkPurpleLight)
-                        .font(.caption)
-                }
+                Label("Contact Us", systemImage: "envelope")
+                    .foregroundStyle(Color.kkTextWhite)
             }
             
-            Button {
+            NavigationLink {
+//                RequestStoryView()
             } label: {
-                HStack {
-                    Label("Request a Bible Story", systemImage: "book")
-                        .foregroundStyle(Color.kkTextWhite)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.kkPurpleLight)
-                        .font(.caption)
-                }
+                Label("Request a Bible Story", systemImage: "book")
+                    .foregroundStyle(Color.kkTextWhite)
             }
             
-            Button {
+            NavigationLink {
+                RequestChannelView()
             } label: {
-                HStack {
-                    Label("Request a Channel", systemImage: "play.circle")
-                        .foregroundStyle(Color.kkTextWhite)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.kkPurpleLight)
-                        .font(.caption)
-                }
+                Label("Request a Channel", systemImage: "play.circle")
+                    .foregroundStyle(Color.kkTextWhite)
             }
         } header: {
             Text("Support")
@@ -246,20 +211,20 @@ struct AvatarPickerView: View {
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.kkGold)
-                    .padding (.top, 32)
+                    .padding(.top, 32)
                 
                 LazyVGrid(columns: [
                     GridItem(.flexible()),
                     GridItem(.flexible()),
                     GridItem(.flexible()),
                     GridItem(.flexible()),
-                    GridItem(.flexible()),
+                    GridItem(.flexible())
                 ], spacing: 16) {
                     ForEach(avatars, id: \.self) { avatar in
                         Button {
                             appState.selectedAvatar = avatar
                             dismiss()
-                        } label : {
+                        } label: {
                             Text(avatar)
                                 .font(.system(size: 44))
                                 .frame(width: 64, height: 64)
@@ -276,6 +241,8 @@ struct AvatarPickerView: View {
 }
 
 #Preview {
-    MoreTabView()
-        .environment(AppState())
+    NavigationStack {
+        MoreTabView()
+            .environment(AppState())
+    }
 }
