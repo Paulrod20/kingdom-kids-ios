@@ -40,48 +40,54 @@ struct RequestStoryView: View {
 
                     InfoCard {
                         VStack(alignment: .leading, spacing: 16) {
-                            inputField(
+                            RequestTextField(
                                 title: "Story Title",
                                 text: $storyTitle,
                                 placeholder: "Example: David and Goliath",
                                 field: .storyTitle,
+                                focusedField: $focusedField,
+                                capitalization: .words,
+                                keyboardType: .default,
                                 submitLabel: .next
                             ) {
                                 focusedField = .bibleReference
                             }
 
-                            inputField(
+                            RequestTextField(
                                 title: "Bible Reference",
                                 text: $bibleReference,
                                 placeholder: "Example: 1 Samuel 17",
                                 field: .bibleReference,
+                                focusedField: $focusedField,
+                                capitalization: .words,
+                                keyboardType: .default,
                                 submitLabel: .next
                             ) {
                                 focusedField = .details
                             }
 
-                            ageRangePicker
-                            detailsField
+                            RequestAgeRangePicker(
+                                title: "Age Range",
+                                selection: $ageRange,
+                                ageRanges: ageRanges
+                            )
+
+                            RequestDetailsField(
+                                title: "Details",
+                                text: $details,
+                                placeholder: "Share any details you would like us to consider",
+                                field: .details,
+                                focusedField: $focusedField
+                            )
                         }
                     }
 
-                    Button(action: submitRequest) {
-                        Group {
-                            if isSubmitting {
-                                ProgressView()
-                                    .tint(Color.kkPurpleDark)
-                            } else {
-                                Text("Submit Story Request")
-                            }
-                        }
-                        .font(.headline)
-                        .foregroundStyle(isFormValid ? Color.kkPurpleDark : Color.kkTextLight)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(isFormValid ? Color.kkGold : Color.gray.opacity(0.5))
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
-                    }
-                    .disabled(!isFormValid || isSubmitting)
+                    RequestSubmitButton(
+                        title: "Submit Story Request",
+                        isFormValid: isFormValid,
+                        isSubmitting: isSubmitting,
+                        action: submitRequest
+                    )
 
                     InfoCard {
                         Text("What happens next?")
@@ -123,88 +129,6 @@ struct RequestStoryView: View {
             Text("Suggest a Bible story you’d love to see added to Kingdom Kids.")
                 .font(.subheadline)
                 .foregroundStyle(Color.kkTextLight)
-        }
-    }
-
-    private func inputField(
-        title: String,
-        text: Binding<String>,
-        placeholder: String,
-        field: Field,
-        submitLabel: SubmitLabel,
-        onSubmit: @escaping () -> Void
-    ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color.kkGold)
-
-            TextField(
-                "",
-                text: text,
-                prompt: Text(placeholder)
-                    .foregroundStyle(Color.kkTextLight.opacity(0.5))
-            )
-            .textInputAutocapitalization(.words)
-            .submitLabel(submitLabel)
-            .focused($focusedField, equals: field)
-            .onSubmit(onSubmit)
-            .padding()
-            .background(Color.kkPurpleDark.opacity(0.6))
-            .foregroundStyle(Color.kkTextLight)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-    }
-
-    private var ageRangePicker: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Age Range")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color.kkGold)
-
-            Picker("Age Range", selection: $ageRange) {
-                ForEach(ageRanges, id: \.self) { range in
-                    Text(range)
-                        .tag(range)
-                }
-            }
-            .pickerStyle(.menu)
-            .tint(Color.kkGold)
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.kkPurpleDark.opacity(0.6))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-    }
-
-    private var detailsField: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Details")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color.kkGold)
-
-            ZStack(alignment: .topLeading) {
-                if details.isEmpty {
-                    Text("Share any details you would like us to consider")
-                        .foregroundStyle(Color.kkTextLight.opacity(0.5))
-                        .padding(.horizontal, 13)
-                        .padding(.vertical, 16)
-                        .allowsHitTesting(false)
-                }
-
-                TextEditor(text: $details)
-                    .focused($focusedField, equals: .details)
-                    .frame(minHeight: 140)
-                    .padding(8)
-                    .foregroundStyle(Color.kkTextLight)
-                    .scrollContentBackground(.hidden)
-                    .background(Color.clear)
-            }
-            .background(Color.kkPurpleDark.opacity(0.6))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
 
