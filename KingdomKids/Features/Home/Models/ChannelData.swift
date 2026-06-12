@@ -60,4 +60,60 @@ let channelData: [Channel] = [
         channelId: "UCmkgg5el8Fg3IX_baZyfSaQ",
         ageGroup: [.explorer]
     ),
+    Channel(
+        channelName: "Hillsong Kids",
+        description: "Engaging children of this generation in worship — Building the lives of children all over the globe.",
+        bannerImageChannel: "hillsongkids-profile",
+        channelId: "UCbVGLnrXJzqwvxS9hyTsWDw",
+        ageGroup: [.toddler, .explorer]
+    ),
+    Channel(
+        channelName: "LifeKids",
+        description: "LifeKids is the children’s ministry of Life.Church for kids birth—6th grade (ages 0—12 years).",
+        bannerImageChannel: "lifekids-profile",
+        channelId: "UCcGvV66gr1IItGbbBodqc7A",
+        ageGroup: [.explorer]
+    ),
+    Channel(
+        channelName: "Crossroads Kids' Club",
+        description: "Welcome to the Crossroads’ Kids’ Club Channel! We have all kinds of cool stuff here for you and your kids to explore, and we’re always updating with brand new content.",
+        bannerImageChannel: "crossroads-profile",
+        channelId: "UCmMySSzKknjgAVVCOPXu_qg",
+        ageGroup: [.explorer]
+    ),
+    Channel(
+        channelName: "Smile and Learn - English",
+        description: "Our channel features didactic stories and videos about values, Geography, History, Literacy, Science, Modern Languages, emotions, yoga... and so much more!",
+        bannerImageChannel: "smileandlearn-profile",
+        channelId: "UCxoDMG0tvaYO5Xobvtqw5nw",
+        ageGroup: [.toddler, .explorer]
+    ),
+    Channel(
+        channelName: "The Smiley Bunch",
+        description: "Life of a Florida family 🌴🫶🌊🌸",
+        bannerImageChannel: "smiley-profile",
+        channelId: "UCdRiMyV5vKihQk-rl-2c6XA",
+        ageGroup: [.toddler]
+    ),
+    Channel(
+        channelName: "School Drives Me",
+        description: "I’m Ms. Nkechi, a children’s book author, educator, & mom who believes every child is smart, loved, & capable of greatness.",
+        bannerImageChannel: "schooldrivesme-profile",
+        channelId: "UCdqEGnouLhD5S7zjkWCREfQ",
+        ageGroup: [.toddler, .explorer]
+    ),
+    Channel(
+        channelName: "What's In The Bible?",
+        description: "Christian video trailers, bible lessons for kids and more from the new series from VeggieTales creator Phil Vischer.",
+        bannerImageChannel: "whatsinthebible-profile",
+        channelId: "UCiFIuW5SWY2HwVi878DVdug",
+        ageGroup: [.toddler, .explorer]
+    ),
+    Channel(
+        channelName: "eKidzOnline",
+        description: "Elevation eKidz Online is a place where kids all over the world have fun and learn about Jesus.",
+        bannerImageChannel: "ekidzonline-profile",
+        channelId: "UCH7ATI2bl5u-uLygXJzfYsg",
+        ageGroup: [.explorer]
+    )
 ]
