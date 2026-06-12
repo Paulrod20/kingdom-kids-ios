@@ -18,12 +18,22 @@ struct VideoCard: View {
             }
         } label: {
             VStack(alignment: .leading, spacing: 6) {
-                AsyncImage(url: URL(string: video.thumbnail)) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    Color.kkPurpleMid
+                AsyncImage(url: URL(string: video.thumbnail)) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    case .failure(_), .empty:
+                        ZStack {
+                            Color.kkPurpleMid
+                            Image(systemName: "play.circle.fill")
+                                .font(.system(size: 32))
+                                .foregroundStyle(Color.kkGold)
+                        }
+                    @unknown default:
+                        Color.kkPurpleMid
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 90)
