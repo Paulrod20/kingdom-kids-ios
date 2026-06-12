@@ -9,13 +9,13 @@ import SwiftUI
 
 struct VideoCard: View {
     @Environment(\.openURL) private var openURL
+    @State private var showPlayer = false
+    
     let video: YouTubeVideo
 
     var body: some View {
         Button {
-            if let url = URL(string: video.videoURL) {
-                openURL(url)
-            }
+            showPlayer = true
         } label: {
             VStack(alignment: .leading, spacing: 6) {
                 AsyncImage(url: URL(string: video.thumbnail)) { phase in
@@ -57,5 +57,8 @@ struct VideoCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
         .buttonStyle(.plain)
+        .sheet(isPresented: $showPlayer) {
+            VideoPlayerView(video: video)
+        }
     }
 }
