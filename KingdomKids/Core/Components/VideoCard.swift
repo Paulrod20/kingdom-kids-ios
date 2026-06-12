@@ -25,7 +25,8 @@ struct VideoCard: View {
                 } placeholder: {
                     Color.kkPurpleMid
                 }
-                .frame(width: 160, height: 90)
+                .frame(maxWidth: .infinity)
+                .frame(height: 90)
                 .clipped()
 
                 Text(video.title)
@@ -41,7 +42,7 @@ struct VideoCard: View {
                     .padding(.horizontal, 8)
                     .padding(.bottom, 8)
             }
-            .frame(width: 160)
+            .frame(maxWidth: .infinity)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }

@@ -2,26 +2,24 @@
 //  VideosTabView.swift
 //  KingdomKids
 //
-//  Created by Paul Rodriguez on 5/25/26.
+//  Updated by Paul Rodriguez on 6/12/26.
 //
 
 import SwiftUI
 
 struct VideosTabView: View {
     @Environment(AppState.self) private var appState
-    @State private var channelVideos: [String: [YouTubeVideo]] = [:]
-    @State private var isLoading = true
-    
+
     private var filteredChannels: [Channel] {
         channelData.filter { $0.ageGroup.contains(appState.ageGroup ?? .toddler) }
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 headerView
-                
-                if isLoading {
+
+                if appState.isLoadingVideos {
                     loadingView
                 } else {
                     channelsRow
@@ -31,12 +29,10 @@ struct VideosTabView: View {
         }
         .background(Color.kkPurpleDark.ignoresSafeArea())
         .scrollContentBackground(.hidden)
-        .task {
-            await loadAllVideos()
-        }
     }
-    
+
     // MARK: - Header
+
     private var headerView: some View {
         VStack(spacing: 4) {
             Text("📺")
@@ -53,8 +49,9 @@ struct VideosTabView: View {
         .padding(.vertical, 16)
         .background(Color.kkPurpleDark)
     }
-    
+
     // MARK: - Loading
+
     private var loadingView: some View {
         VStack(spacing: 16) {
             ProgressView()
@@ -67,8 +64,9 @@ struct VideosTabView: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 60)
     }
-    
+
     // MARK: - Channels Row
+
     private var channelsRow: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("CHANNELS")
@@ -77,7 +75,7 @@ struct VideosTabView: View {
                 .foregroundStyle(Color.kkPurpleLight)
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(filteredChannels, id: \.id) { channel in
@@ -90,12 +88,13 @@ struct VideosTabView: View {
             }
         }
     }
-    
+
     // MARK: - Videos by Channel
+
     private var videosByChannelSection: some View {
         VStack(alignment: .leading, spacing: 0) {
             ForEach(filteredChannels, id: \.id) { channel in
-                if let videos = channelVideos[channel.channelId], !videos.isEmpty {
+                if let videos = appState.channelVideos[channel.channelId], !videos.isEmpty {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             Text(channel.channelName)
@@ -111,11 +110,12 @@ struct VideosTabView: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(.top, 16)
-                        
+
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 10) {
                                 ForEach(videos.prefix(5)) { video in
                                     VideoCard(video: video)
+                                        .frame(width: 160)
                                 }
                             }
                             .padding(.horizontal, 16)
@@ -126,29 +126,4 @@ struct VideosTabView: View {
         }
         .padding(.bottom, 16)
     }
-    
-    // MARK: - Load Videos
-    private func loadAllVideos() async {
-        await withTaskGroup(of: (String, [YouTubeVideo]).self) { group in
-            for channel in filteredChannels {
-                group.addTask {
-                    do {
-                        let videos = try await YouTubeService.shared.fetchVideos(channelID: channel.channelId)
-                        return (channel.channelId, videos)
-                    } catch {
-                        return (channel.channelId, [])
-                    }
-                }
-            }
-            for await (channelId, videos) in group {
-                channelVideos[channelId] = videos
-            }
-        }
-        isLoading = false
-    }
-}
-
-#Preview {
-    VideosTabView()
-        .environment(AppState())
 }

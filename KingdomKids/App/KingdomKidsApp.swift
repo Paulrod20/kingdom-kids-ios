@@ -38,6 +38,9 @@ struct KingdomKidsApp: App {
                     AuthView()
                 } else if appState.hasCompletedOnboarding {
                     HomeView()
+                        .task {
+                            await appState.loadVideos()
+                        }
                 } else {
                     OnboardingView()
                 }

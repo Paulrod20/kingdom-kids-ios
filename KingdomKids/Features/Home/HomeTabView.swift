@@ -28,12 +28,21 @@ struct HomeTabView: View {
             .map { $0 }
     }
     
+    private var featuredVideos: [YouTubeVideo] {
+        appState.channelVideos.values
+            .flatMap { $0 }
+            .shuffled()
+            .prefix(10)
+            .map { $0 }
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 headerView
                 verseCard
                 featuredGamesSection
+                featuredVideosSection
                 featuredStoriesSection
             }
         }
@@ -110,6 +119,42 @@ struct HomeTabView: View {
                     }
                 }
                 .padding(.horizontal, 16)
+            }
+        }
+    }
+    
+    // MARK: - Featured Videos
+    
+    private var featuredVideosSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("VIDEOS")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.kkPurpleLight)
+                Spacer()
+                Text("See All")
+                    .font(.caption)
+                    .foregroundStyle(Color.kkGold)
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+            
+            if appState.isLoadingVideos {
+                ProgressView()
+                    .tint(Color.kkGold)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 20)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(featuredVideos) { video in
+                            VideoCard(video: video)
+                                .frame(width: 160)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                }
             }
         }
     }
