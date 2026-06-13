@@ -8,29 +8,31 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var selectedTab: String = "Home"
+
     var body: some View {
-        TabView {
-            Tab("Home", systemImage: "house") {
+        TabView(selection: $selectedTab) {
+            Tab("Home", systemImage: "house", value: "Home") {
                 NavigationStack {
-                    HomeTabView()
+                    HomeTabView(selectedTab: $selectedTab)
                 }
             }
-            Tab("Games", systemImage: "gamecontroller") {
+            Tab("Games", systemImage: "gamecontroller", value: "Games") {
                 NavigationStack {
                     GamesTabView()
                 }
             }
-            Tab("Stories", systemImage: "book") {
+            Tab("Stories", systemImage: "book", value: "Stories") {
                 NavigationStack {
                     StoriesTabView()
                 }
             }
-            Tab("Videos", systemImage: "play.circle") {
+            Tab("Videos", systemImage: "play.circle", value: "Videos") {
                 NavigationStack {
                     VideosTabView()
                 }
             }
-            Tab("More", systemImage: "ellipsis.circle") {
+            Tab("More", systemImage: "ellipsis.circle", value: "More") {
                 NavigationStack {
                     MoreTabView()
                 }
@@ -40,7 +42,6 @@ struct HomeView: View {
         .tint(Color.kkGold)
     }
 }
-
 
 #Preview {
     HomeView()

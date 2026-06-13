@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeTabView: View {
     @Environment(AppState.self) private var appState
+    @Binding var selectedTab: String
     
     private var todaysVerse: Verse {
         verseOfTheDayList.randomElement() ?? verseOfTheDayList[0]
@@ -48,6 +49,18 @@ struct HomeTabView: View {
         }
         .background(Color.kkPurpleDark.ignoresSafeArea())
         .scrollContentBackground(.hidden)
+        .navigationDestination(for: GameDestination.self) { destination in
+            switch destination {
+            case .bibleTrivia:
+                BibleTriviaView()
+            case .cardMatch:
+                CardMatchView()
+            }
+        }
+        .navigationDestination(for: Story.self) { story in
+            StoryReaderView(story: story)
+        }
+        
     }
     
     // MARK: - Header
@@ -102,11 +115,15 @@ struct HomeTabView: View {
                 Text("GAMES")
                     .font(.caption)
                     .fontWeight(.semibold)
+                
                     .foregroundStyle(Color.kkPurpleLight)
                 Spacer()
-                Text("See All")
-                    .font(.caption)
-                    .foregroundStyle(Color.kkGold)
+                
+                Button { selectedTab = "Games" } label: {
+                    Text("See All")
+                        .font(.caption)
+                        .foregroundStyle(Color.kkGold)
+                }
             }
             .padding(.horizontal, 16)
             .padding(.top, 16)
@@ -114,8 +131,16 @@ struct HomeTabView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(featuredGames, id: \.id) { game in
-                        HomeGameCard(game: game)
-                            .frame(width: 140)
+                        if let destination = game.destination {
+                            NavigationLink(value: destination) {
+                                HomeGameCard(game: game)
+                                    .frame(width: 140)
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            HomeGameCard(game: game)
+                                .frame(width: 140)
+                        }
                     }
                 }
                 .padding(.horizontal, 16)
@@ -132,10 +157,14 @@ struct HomeTabView: View {
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.kkPurpleLight)
+                
                 Spacer()
-                Text("See All")
-                    .font(.caption)
-                    .foregroundStyle(Color.kkGold)
+                
+                Button { selectedTab = "Videos" } label: {
+                    Text("See All")
+                        .font(.caption)
+                        .foregroundStyle(Color.kkGold)
+                }
             }
             .padding(.horizontal, 16)
             .padding(.top, 16)
@@ -168,9 +197,12 @@ struct HomeTabView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.kkPurpleLight)
                 Spacer()
-                Text("See All")
-                    .font(.caption)
-                    .foregroundStyle(Color.kkGold)
+                
+                Button { selectedTab = "Stories" } label: {
+                    Text("See All")
+                        .font(.caption)
+                        .foregroundStyle(Color.kkGold)
+                }
             }
             .padding(.horizontal, 16)
             .padding(.top, 16)
@@ -178,7 +210,11 @@ struct HomeTabView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(featuredStories, id: \.id) { story in
-                        FeaturedStoryCard(story: story)
+                        NavigationLink(value: story) {
+                            FeaturedStoryCard(story: story)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(story.isLocked)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -189,6 +225,6 @@ struct HomeTabView: View {
 }
 
 #Preview {
-    HomeTabView()
+    HomeTabView(selectedTab: .constant("Home"))
         .environment(AppState())
 }
