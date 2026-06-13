@@ -6,18 +6,19 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Story: Hashable {
     let id: UUID = UUID()
     let title: String
     let subtitle: String
     let emoji: String
+    let color: Color
     let ageGroups: [AgeGroup]
     let isLocked: Bool
     let scripture: String
     let scriptureText: String
     let pages: [String]
-    let color: Color
 }
 
 let storiesData: [Story] = [
@@ -25,6 +26,7 @@ let storiesData: [Story] = [
         title: "The Beginning of the World",
         subtitle: "A story of creation",
         emoji: "🌍",
+        color: Color.kkStoryCreation,
         ageGroups: [.toddler, .explorer],
         isLocked: false,
         scripture: "Genesis 1:1",
@@ -41,6 +43,7 @@ let storiesData: [Story] = [
         title: "Adam & Eve",
         subtitle: "The beginning of everything",
         emoji: "🌳",
+        color: Color.kkStoryEden,
         ageGroups: [.toddler, .explorer],
         isLocked: false,
         scripture: "Genesis 2:7",
@@ -59,6 +62,7 @@ let storiesData: [Story] = [
         title: "Noah's Ark",
         subtitle: "God saves Noah and the animals",
         emoji: "🚢",
+        color: Color.kkStoryArk,
         ageGroups: [.toddler, .explorer],
         isLocked: false,
         scripture: "Genesis 6:22",
@@ -77,6 +81,7 @@ let storiesData: [Story] = [
         title: "Joseph's Coat of Many Colors",
         subtitle: "A coat and a big dream",
         emoji: "🌈",
+        color: Color.kkStoryJoseph,
         ageGroups: [.toddler, .explorer],
         isLocked: true,
         scripture: "Genesis 37:3",
@@ -95,6 +100,7 @@ let storiesData: [Story] = [
         title: "Baby Moses",
         subtitle: "God protects baby Moses",
         emoji: "🧺",
+        color: Color.kkStoryMoses,
         ageGroups: [.toddler, .explorer],
         isLocked: true,
         scripture: "Exodus 2:10",
@@ -113,6 +119,7 @@ let storiesData: [Story] = [
         title: "David & Goliath",
         subtitle: "A small boy defeats a giant",
         emoji: "🪨",
+        color: Color.kkStoryDavid,
         ageGroups: [.explorer],
         isLocked: true,
         scripture: "1 Samuel 17:45",
@@ -131,6 +138,7 @@ let storiesData: [Story] = [
         title: "Daniel & the Lions",
         subtitle: "God protects Daniel",
         emoji: "🦁",
+        color: Color.kkStoryDaniel,
         ageGroups: [.toddler, .explorer],
         isLocked: true,
         scripture: "Daniel 6:22",
@@ -149,6 +157,7 @@ let storiesData: [Story] = [
         title: "Jonah & the Whale",
         subtitle: "God gives Jonah a second chance",
         emoji: "🐋",
+        color: Color.kkStoryJonah,
         ageGroups: [.toddler, .explorer],
         isLocked: true,
         scripture: "Jonah 2:1",
@@ -167,6 +176,7 @@ let storiesData: [Story] = [
         title: "The Birth of Jesus",
         subtitle: "A new beginning",
         emoji: "👶",
+        color: Color.kkStoryJesus,
         ageGroups: [.toddler, .explorer],
         isLocked: true,
         scripture: "Luke 2:11",
@@ -185,6 +195,7 @@ let storiesData: [Story] = [
         title: "The Good Samaritan",
         subtitle: "Love your neighbor",
         emoji: "🤝",
+        color: Color.kkStorySamaritan,
         ageGroups: [.explorer],
         isLocked: true,
         scripture: "Luke 10:27",
@@ -203,6 +214,7 @@ let storiesData: [Story] = [
         title: "Jesus Feeds 5000",
         subtitle: "A little becomes a lot",
         emoji: "🍞",
+        color: Color.kkStoryFeeding,
         ageGroups: [.toddler, .explorer],
         isLocked: true,
         scripture: "John 6:11",
