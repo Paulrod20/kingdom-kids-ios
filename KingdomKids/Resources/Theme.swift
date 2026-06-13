@@ -26,5 +26,18 @@ extension Color {
     // Accents / Status
     static let kkMint          = Color(red: 0.624, green: 0.882, blue: 0.796)
     static let kkMintDark      = Color(red: 0.031, green: 0.314, blue: 0.255)
-}
+    
+    // Story Colors
+    static let kkStoryCreation = Color(red: 0.298, green: 0.243, blue: 0.808)
+    static let kkStoryEden = Color(red: 0.059, green: 0.431, blue: 0.337)
+    static let kkStoryArk = Color(red: 0.094, green: 0.373, blue: 0.647)
+    static let kkStoryJoseph = Color(red: 0.600, green: 0.235, blue: 0.114)
+    static let kkStoryMoses = Color(red: 0.031, green: 0.431, blue: 0.388)
+    static let kkStoryDavid = Color(red: 0.325, green: 0.290, blue: 0.718)
+    static let kkStoryDaniel = Color(red: 0.522, green: 0.310, blue: 0.043)
+    static let kkStoryJonah = Color(red: 0.016, green: 0.173, blue: 0.325)
+    static let kkStoryJesus = Color(red: 0.235, green: 0.204, blue: 0.537)
+    static let kkStorySamaritan = Color(red: 0.231, green: 0.427, blue: 0.067)
+    static let kkStoryFeeding = Color(red: 0.388, green: 0.220, blue: 0.024)
 
+}

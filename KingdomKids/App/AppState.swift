@@ -45,4 +45,20 @@ class AppState {
         }
         isLoadingVideos = false
     }
+    
+    var readStoryIDs: Set<String> {
+        get {
+            let saved = UserDefaults.standard.stringArray(forKey: "readStoryIDs") ?? []
+            return Set(saved)
+        }
+        set {
+            UserDefaults.standard.set(Array(newValue), forKey: "readStoryIDs")
+        }
+    }
+
+    func markStoryAsRead(_ story: Story) {
+        var current = readStoryIDs
+        current.insert(story.id.uuidString)
+        readStoryIDs = current
+    }
 }

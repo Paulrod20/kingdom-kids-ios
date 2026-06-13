@@ -23,6 +23,9 @@ struct StoriesTabView: View {
         }
         .background(Color.kkPurpleDark.ignoresSafeArea())
         .scrollContentBackground(.hidden)
+        .navigationDestination(for: Story.self) { story in
+            StoryReaderView(story: story)
+        }
     }
     
     // MARK: - Header
@@ -67,33 +70,29 @@ struct StoriesTabView: View {
 // MARK: - Story Card
 struct StoryCard: View {
     let story: Story
-    
+
     var body: some View {
-        Button {
-            if !story.isLocked {
-                print("Tapped \(story.title)")
-            }
-        } label: {
+        NavigationLink(value: story) {
             HStack(spacing: 14) {
                 Text(story.emoji)
                     .font(.system(size: 40))
                     .frame(width: 56, height: 56)
                     .background(Color.kkPurpleLight.opacity(0.2))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
-                
+
                 VStack(alignment: .leading, spacing: 4) {
                     Text(story.title)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.kkPurpleDeep)
-                    
+
                     Text(story.subtitle)
                         .font(.caption)
                         .foregroundStyle(Color.kkPurpleMid)
                 }
-                
+
                 Spacer()
-                
+
                 if story.isLocked {
                     Text("🔒")
                         .font(.caption)
@@ -112,6 +111,7 @@ struct StoryCard: View {
             .opacity(story.isLocked ? 0.7 : 1.0)
         }
         .buttonStyle(.plain)
+        .disabled(story.isLocked)
     }
 }
 
